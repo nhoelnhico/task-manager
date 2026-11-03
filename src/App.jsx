@@ -1,20 +1,19 @@
-import { useTodo, useTodos } from './hooks/useTodos'
+import { Route, Routes } from 'react-router'
+import Layout from './components/Layout'
+import DashboardPage from './pages/DashboardPage'
+import NotFoundPage from './pages/NotFoundPage'
+import TaskDetailPage from './pages/TaskDetailPage'
+import TasksPage from './pages/TasksPage'
 
 export default function App() {
-  const todos = useTodos()
-  const missing = useTodo('9999')
-
   return (
-    <main className="min-h-screen space-y-2 bg-slate-100 p-8">
-      <h1 className="text-3xl font-bold text-indigo-600">Task Manager</h1>
-      <p>
-        Todos:{' '}
-        {todos.isPending ? 'Loading…' : todos.isError ? todos.error.message : todos.data.length}
-      </p>
-      <p>
-        Todo 9999:{' '}
-        {missing.isPending ? 'Loading…' : missing.isError ? missing.error.message : 'found'}
-      </p>
-    </main>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<DashboardPage />} />
+        <Route path="tasks" element={<TasksPage />} />
+        <Route path="tasks/:id" element={<TaskDetailPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
