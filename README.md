@@ -278,7 +278,7 @@ Edit `src/utils/taskStats.js`. Completion rate is `round(completed ÷ total × 1
 - Responsive and accessibility pass
 =======
 # TaskFlow — React Task & Productivity Manager
->>>>>>> Stashed changes
+
 
 A multi-page task manager that fetches tasks from a public API, lets you browse, filter and search them, and shows each task in detail. Built by **Nhico Noel Ortazon** as Mini-project 1.
 
@@ -552,9 +552,3 @@ Edit `src/utils/taskStats.js`. Completion rate is `round(completed ÷ total × 1
 - Task detail page with ID validation and separate not-found / network-error handling
 - Dashboard statistics and Error Boundary
 - Scrollable table view with sticky header
-<<<<<<< Updated upstream
-- Responsive and accessibility pass
-=======
-- Responsive and accessibility pass
->>>>>>> f3b62e6 (updating readme)
->>>>>>> Stashed changes
