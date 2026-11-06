@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router'
 import EmptyState from '../components/EmptyState'
 import ErrorState from '../components/ErrorState'
 import LoadingState from '../components/LoadingState'
-import TaskCard from '../components/TaskCard'
+import TaskTable from '../components/TaskTable'
 import TaskFilters from '../components/TaskFilters'
 import { useTodos } from '../hooks/useTodos'
 
@@ -78,11 +78,7 @@ export default function TasksPage() {
         <p className="text-sm text-slate-500">
           Showing {visibleTodos.length} of {todos.length} tasks
         </p>
-        <ul className="grid gap-3 md:grid-cols-2">
-          {visibleTodos.map((todo) => (
-            <TaskCard key={todo.id} task={todo} />
-          ))}
-        </ul>
+        <TaskTable tasks={visibleTodos} />
       </>
     )
   }
