@@ -1,18 +1,24 @@
-import { Link, useParams } from 'react-router'
-import EmptyState from '../components/EmptyState'
-import ErrorState from '../components/ErrorState'
-import LoadingState from '../components/LoadingState'
-import StatusBadge from '../components/StatusBadge'
-import { useTodo } from '../hooks/useTodos'
+import { Link, useParams } from "react-router";
+import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
+import LoadingState from "../components/LoadingState";
+import StatusBadge from "../components/StatusBadge";
+import { useTodo } from "../hooks/useTodos";
 
 function isValidId(value) {
-  return /^[1-9]\d*$/.test(value)
+  return /^[1-9]\d*$/.test(value);
 }
 
 export default function TaskDetailPage() {
-  const { id } = useParams()
-  const validId = isValidId(id)
-  const { data: task, isPending, isError, error, refetch } = useTodo(validId ? id : undefined)
+  const { id } = useParams();
+  const validId = isValidId(id);
+  const {
+    data: task,
+    isPending,
+    isError,
+    error,
+    refetch,
+  } = useTodo(validId ? id : undefined);
 
   function renderContent() {
     if (!validId || error?.status === 404) {
@@ -29,15 +35,19 @@ export default function TaskDetailPage() {
             </Link>
           }
         />
-      )
+      );
     }
 
-    if (isPending) return <LoadingState message="Loading task…" />
+    if (isPending) return <LoadingState message="Loading task…" />;
 
     if (isError) {
       return (
-        <ErrorState title="Couldn’t load this task" message={error.message} onRetry={refetch} />
-      )
+        <ErrorState
+          title="Couldn’t load this task"
+          message={error.message}
+          onRetry={refetch}
+        />
+      );
     }
 
     return (
@@ -53,7 +63,9 @@ export default function TaskDetailPage() {
 
         <dl className="mt-6 grid gap-4 border-t border-slate-100 pt-6 sm:grid-cols-3">
           <div>
-            <dt className="text-xs font-medium tracking-wide text-slate-500 uppercase">Task ID</dt>
+            <dt className="text-xs font-medium tracking-wide text-slate-500 uppercase">
+              Task ID
+            </dt>
             <dd className="mt-1 text-slate-900">{task.id}</dd>
           </div>
           <div>
@@ -63,20 +75,28 @@ export default function TaskDetailPage() {
             <dd className="mt-1 text-slate-900">User {task.userId}</dd>
           </div>
           <div>
-            <dt className="text-xs font-medium tracking-wide text-slate-500 uppercase">Status</dt>
-            <dd className="mt-1 text-slate-900">{task.completed ? 'Completed' : 'In progress'}</dd>
+            <dt className="text-xs font-medium tracking-wide text-slate-500 uppercase">
+              Status
+            </dt>
+            <dd className="mt-1 text-slate-900">
+              {task.completed ? "Completed" : "In progress"}
+            </dd>
           </div>
         </dl>
       </article>
-    )
+    );
   }
 
   return (
     <section className="space-y-4">
-      <Link to="/tasks" className="inline-block text-sm text-indigo-600 hover:underline">
+      <title>{`Task #${id} · TaskFlow`}</title>
+      <Link
+        to="/tasks"
+        className="inline-block text-sm text-indigo-600 hover:underline"
+      >
         ← Back to tasks
       </Link>
       {renderContent()}
     </section>
-  )
+  );
 }

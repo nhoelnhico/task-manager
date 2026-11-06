@@ -1,5 +1,5 @@
-import { Link } from 'react-router'
-import StatusBadge from './StatusBadge'
+import { Link } from "react-router";
+import StatusBadge from "./StatusBadge";
 
 export default function TaskCard({ task }) {
   return (
@@ -14,7 +14,7 @@ export default function TaskCard({ task }) {
           </p>
           <p
             className={`mt-1 font-medium break-words first-letter:uppercase ${
-              task.completed ? 'text-slate-400 line-through' : 'text-slate-900'
+              task.completed ? "text-slate-500 line-through" : "text-slate-900"
             }`}
           >
             {task.title}
@@ -23,5 +23,5 @@ export default function TaskCard({ task }) {
         <StatusBadge completed={task.completed} />
       </Link>
     </li>
-  )
+  );
 }

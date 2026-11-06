@@ -1,59 +1,65 @@
-import { useSearchParams } from 'react-router'
-import EmptyState from '../components/EmptyState'
-import ErrorState from '../components/ErrorState'
-import LoadingState from '../components/LoadingState'
-import TaskTable from '../components/TaskTable'
-import TaskFilters from '../components/TaskFilters'
-import { useTodos } from '../hooks/useTodos'
+import { useSearchParams } from "react-router";
+import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
+import LoadingState from "../components/LoadingState";
+import TaskTable from "../components/TaskTable";
+import TaskFilters from "../components/TaskFilters";
+import { useTodos } from "../hooks/useTodos";
 
-const VALID_STATUSES = ['all', 'pending', 'done']
+const VALID_STATUSES = ["all", "pending", "done"];
 
 function filterTodos(todos, status, query) {
-  const normalizedQuery = query.trim().toLowerCase()
+  const normalizedQuery = query.trim().toLowerCase();
 
   return todos.filter((todo) => {
     const matchesStatus =
-      status === 'all' || (status === 'done' ? todo.completed : !todo.completed)
+      status === "all" ||
+      (status === "done" ? todo.completed : !todo.completed);
     const matchesQuery =
-      normalizedQuery === '' || todo.title.toLowerCase().includes(normalizedQuery)
-    return matchesStatus && matchesQuery
-  })
+      normalizedQuery === "" ||
+      todo.title.toLowerCase().includes(normalizedQuery);
+    return matchesStatus && matchesQuery;
+  });
 }
 
 export default function TasksPage() {
-  const { data: todos, isPending, isError, error, refetch } = useTodos()
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { data: todos, isPending, isError, error, refetch } = useTodos();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const statusParam = searchParams.get('status')
-  const status = VALID_STATUSES.includes(statusParam) ? statusParam : 'all'
-  const query = searchParams.get('q') ?? ''
+  const statusParam = searchParams.get("status");
+  const status = VALID_STATUSES.includes(statusParam) ? statusParam : "all";
+  const query = searchParams.get("q") ?? "";
 
   function updateParam(key, value, defaultValue) {
     setSearchParams(
       (prev) => {
-        const next = new URLSearchParams(prev)
-        if (value === defaultValue) next.delete(key)
-        else next.set(key, value)
-        return next
+        const next = new URLSearchParams(prev);
+        if (value === defaultValue) next.delete(key);
+        else next.set(key, value);
+        return next;
       },
       { replace: true },
-    )
+    );
   }
 
   function clearFilters() {
-    setSearchParams({}, { replace: true })
+    setSearchParams({}, { replace: true });
   }
 
   function renderContent() {
-    if (isPending) return <LoadingState message="Loading tasks…" />
+    if (isPending) return <LoadingState message="Loading tasks…" />;
 
     if (isError) {
       return (
-        <ErrorState title="Couldn’t load tasks" message={error.message} onRetry={refetch} />
-      )
+        <ErrorState
+          title="Couldn’t load tasks"
+          message={error.message}
+          onRetry={refetch}
+        />
+      );
     }
 
-    const visibleTodos = filterTodos(todos, status, query)
+    const visibleTodos = filterTodos(todos, status, query);
 
     if (visibleTodos.length === 0) {
       return (
@@ -70,7 +76,7 @@ export default function TasksPage() {
             </button>
           }
         />
-      )
+      );
     }
 
     return (
@@ -80,24 +86,27 @@ export default function TasksPage() {
         </p>
         <TaskTable tasks={visibleTodos} />
       </>
-    )
+    );
   }
 
   return (
     <section className="space-y-6">
+      <title>Tasks · TaskFlow</title>
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Tasks</h1>
-        <p className="mt-1 text-slate-600">Browse, filter and search your tasks.</p>
+        <h1 className="text-2xl font-bold text-slate-900">Tasks - TaskFlow</h1>
+        <p className="mt-1 text-slate-600">
+          Browse, filter and search your tasks.
+        </p>
       </div>
 
       <TaskFilters
         status={status}
         query={query}
-        onStatusChange={(value) => updateParam('status', value, 'all')}
-        onQueryChange={(value) => updateParam('q', value, '')}
+        onStatusChange={(value) => updateParam("status", value, "all")}
+        onQueryChange={(value) => updateParam("q", value, "")}
       />
 
       {renderContent()}
     </section>
-  )
+  );
 }

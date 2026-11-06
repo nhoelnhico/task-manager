@@ -1,16 +1,14 @@
-import { Component } from 'react'
-import ErrorState from './ErrorState'
+import { Component } from "react";
+import ErrorState from "./ErrorState";
 
 export default class ErrorBoundary extends Component {
-  state = { hasError: false }
+  state = { hasError: false };
 
   static getDerivedStateFromError() {
-    return { hasError: true }
+    return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
-    console.error('Unexpected UI error:', error, info.componentStack)
-  }
+
 
   render() {
     if (this.state.hasError) {
@@ -20,9 +18,9 @@ export default class ErrorBoundary extends Component {
           message="An unexpected error occurred. Reloading usually fixes it."
           onRetry={() => window.location.reload()}
         />
-      )
+      );
     }
 
-    return this.props.children
+    return this.props.children;
   }
 }
