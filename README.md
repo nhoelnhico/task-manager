@@ -1,4 +1,4 @@
-# TaskFlow — React Task & Productivity Manager
+# TaskFlow — Nhico Noel Ortazon Mini Project at Asia 
 
 A multi-page task manager that fetches tasks from a public API, lets you browse, filter and search them, and shows each task in detail. Built by **Nhico Noel Ortazon** as Mini-project 1.
 
