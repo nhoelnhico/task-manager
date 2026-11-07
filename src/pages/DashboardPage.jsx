@@ -9,7 +9,7 @@ import { useTodos } from "../hooks/useTodos";
 import { getProgressByUser, getTaskStats } from "../utils/taskStats";
 
 export default function DashboardPage() {
-  // throw new Error ('Test Crash') - this is for test error page
+
 
   const { data: todos, isPending, isError, error, refetch } = useTodos();
 
